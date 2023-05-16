@@ -6,7 +6,7 @@ import HandleChangeOfX from './HandleChangeOfX';
 
 const ParentComponent = () => {
 const [valueOfX, setValueOfX] = useState(1)
-const [userFunction, setUserFunction] = useState("x");
+const [userFunction, setUserFunction] = useState("0");
 
 const handleSetUserFunction = (newAddedString: string) => {
     setUserFunction(newAddedString)
@@ -16,13 +16,20 @@ const handleSetValueOfX = (newValue: number) => {
     setValueOfX(newValue);
 };
 
+let result;
+try {
+  result = eval(userFunction.replace(/X/g, String(valueOfX)));
+} catch (error) {
+  result = "Invalid expression";
+}
+
 
   return (
     <div>
     ParentComponent
     <p>f(x) = {userFunction}</p>
     <p>where x = {valueOfX}</p>
-    <p>f({valueOfX}) = {valueOfX}</p>
+    <p>f({valueOfX}) = {result}</p>
     <HandleChangeOfX userFunction={userFunction} valueOfX={valueOfX} setValueOfX={handleSetValueOfX} handleSetUserFunction={handleSetUserFunction}/>
     <HandleChangeOfFx userFunction={userFunction} valueOfX={valueOfX} setValueOfX={handleSetValueOfX} handleSetUserFunction={handleSetUserFunction}/>
     </div>
